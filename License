@@ -1,0 +1,19 @@
+
+## Fix 2: Remove `wells/` and `archive/` from GitHub (recommended)
+On GitHub, delete the folders if they’re already uploaded:
+
+- Delete `wells/` (generated outputs)
+- Delete `archive/` (dev history / big files)
+
+You already have:
+- `examples/15_9-F-12_manifest.md` for a sample — that’s enough.
+
+## Fix 3: Update CITATION.cff URL
+Your `CITATION.cff` should point to this repo:
+
+`https://github.com/985185/volve-well-knowledge-graph`
+
+After you do those three, the repo will look professional and intentional instead of “worked on in a panic at 8pm”.
+
+If you paste the current `CITATION.cff` contents here, I’ll give you the full corrected file to paste in one shot.
+::contentReference[oaicite:2]{index=2}
