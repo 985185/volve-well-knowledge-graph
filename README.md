@@ -36,10 +36,18 @@ You should provide (locally, not committed):
 - `out_wellkg_v3_catalog_v1.csv`
 
 This repo does not regenerate the full Volve filesystem catalog from scratch.
+## Intended Use
 
+These manifests are designed to:
+
+- Support drilling engineering research
+- Enable well-centric document discovery
+- Serve as a foundation for knowledge graph construction
+- Provide structured evidence mapping for SPE-style studies
 ## Repro steps (Windows PowerShell)
 
 Place `out_wellkg_v3_catalog_v1.csv` in the repo root, then run:
 
 ```powershell
 .\scripts\run_all.ps1
+
