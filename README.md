@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-# volve-well-knowledge-graph
-=======
 # Volve Well Dossiers
 
 This repository generates **per-well “dossier” manifests** for the public Equinor Volve dataset by mapping **well IDs → relevant archive artifacts** (paths only).
@@ -34,19 +31,15 @@ This project expects a prebuilt master catalog CSV (generated elsewhere) with co
 
 - `path`, `name`, `type`, `ext_norm`, `well`, `top_folder`, `tags`
 
-You already have this as:
+You should provide (locally, not committed):
 
-- `out_wellkg_v3_catalog_v1.csv` (produced by your catalog build workflow)
+- `out_wellkg_v3_catalog_v1.csv`
 
 This repo does not regenerate the full Volve filesystem catalog from scratch.
 
 ## Repro steps (Windows PowerShell)
 
-1) Create a working folder with:
-- `out_wellkg_v3_catalog_v1.csv`
-
-2) Run the pipeline:
+Place `out_wellkg_v3_catalog_v1.csv` in the repo root, then run:
 
 ```powershell
-.\run_all.ps1
->>>>>>> 874fce6 (Initial release: Volve well dossier manifests (v1.3))
+.\scripts\run_all.ps1
