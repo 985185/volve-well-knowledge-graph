@@ -51,3 +51,20 @@ Place `out_wellkg_v3_catalog_v1.csv` in the repo root, then run:
 ```powershell
 .\scripts\run_all.ps1
 
+
+## About
+
+This project provides structured, well-centric discovery over the public Equinor Volve dataset by generating per-well dossier manifests from a filesystem-level catalog.
+
+Rather than redistributing data, the repository builds reproducible indexes that map each well to relevant construction reports, daily drilling reports, logs, surveys, and technical artifacts.
+
+The goal is to support:
+
+- Drilling engineering research
+- Structured document discovery
+- Evidence-based well lifecycle reconstruction
+- Foundation building for knowledge graph development
+
+This repository focuses on deterministic indexing, not machine learning or LLM-based retrieval.
+
+A deterministic well-centric indexing layer for structured petroleum research.
