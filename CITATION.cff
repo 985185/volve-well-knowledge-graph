@@ -1,0 +1,20 @@
+
+## 2) `CITATION.cff
+
+```yaml
+cff-version: 1.2.0
+title: "Volve Well Dossiers"
+message: "If you use this repository or generated manifests in academic work, please cite it."
+type: software
+authors:
+  - family-names: "Appalla"
+    given-names: "Tejaswy"
+repository-code: "https://github.com/985185/volve-well-knowledge-graph"
+keywords:
+  - volve
+  - equinor
+  - well construction
+  - drilling
+  - witsml
+  - daily drilling report
+license: MIT
