@@ -1,10 +1,7 @@
-
-## 2) `CITATION.cff
-
-```yaml
 cff-version: 1.2.0
-title: "Volve Well Dossiers"
 message: "If you use this repository or generated manifests in academic work, please cite it."
+title: "Volve Well Dossiers"
+version: "1.3.0"
 type: software
 authors:
   - family-names: "Appalla"
