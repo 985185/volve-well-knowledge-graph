@@ -88,9 +88,14 @@ Outputs are written to:
 ## Repository structure
 
 | Path | What it is |
-| --- | --- |
-| scripts/ | Pipeline scripts (build whitelist, generate manifests, entry points). |
-| wells/ | Output manifests (per-well). Usually better to ship large outputs via GitHub Releases. |
+|------|------------|
+| scripts/ | Core pipeline scripts (whitelist build + manifest generation + entry points). |
+| tools/ | Utility helpers and experimental scripts (not part of the core pipeline). |
+| docs/ | Documentation, validation notes, and research context. |
+| schema/ | YAML schemas and structured definitions for downstream graph/DDR work. |
+| examples/ | Small example artifacts illustrating expected output format. |
+| data/ | Ground-truth or small reference artifacts (never raw Volve archive files). |
+| wells/ | Generated per-well manifests (output). |
 | well_whitelist.csv | Default whitelist artifact used by the generator. |
 | out_wellkg_v3_catalog_v1.csv | Input catalog (local only; do not commit). |
 
@@ -127,3 +132,4 @@ MIT License. See License.
 ## Citation
 
 See CITATION.cff.
+
