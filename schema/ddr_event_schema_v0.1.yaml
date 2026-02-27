@@ -1,0 +1,197 @@
+schema:
+  name: ddr_event_schema
+  version: 0.1
+  description: >
+    Event-based schema for reconstructing well operations from Daily Drilling Reports (DDR).
+    Designed for deterministic parsing, validation, and later knowledge-graph/RDF ingestion.
+
+  conventions:
+    date_format: YYYY-MM-DD
+    depth_unit: mMD
+    tvd_unit: mTVD
+    density_unit: sg
+    rate_unit: m_per_hr
+    time_window: "00:00-00:00 local rig time unless specified"
+    nullable: "Use null for unknown values. Do not omit required keys."
+
+enums:
+  well_status:
+    - normal
+    - abnormal
+    - suspended
+    - unknown
+
+  operation_type:
+    # drilling & wellbore ops
+    - drill
+    - orient
+    - ream
+    - wash
+    - circulate
+    - condition_hole
+    - flow_check
+    - survey
+    - gyro_run
+    - trip_in
+    - trip_out
+    - woc
+    - cement
+    - test_bop
+    - choke_drill
+    # casing & completion-like ops
+    - rig_up_casing
+    - run_casing
+    - land_hanger
+    - cement_casing
+    - pressure_test
+    - slip_and_cut
+    - retrieve_wear_bushing
+    - wash_bop_wellhead
+    # maintenance / interruptions
+    - repair
+    - troubleshoot
+    - equipment_check
+    - other
+
+  issue_type:
+    - none
+    - mechanical_failure
+    - hydraulic_leak
+    - losses
+    - influx
+    - stuck_pipe
+    - high_torque_drag
+    - hole_cleaning
+    - tool_failure
+    - weather
+    - unknown
+
+  verification_type:
+    - none
+    - well_static_flowcheck
+    - toc_tagged
+    - bop_test
+    - pressure_test
+    - gyro_confirmation
+    - td_survey
+    - cement_displacement_confirmed
+    - casing_float_verified
+
+  formation_name:
+    # extend as needed; keep it optional in events
+    - Ty
+    - Ekofisk
+    - Tor
+    - Hod
+    - unknown
+
+required_objects:
+  well:
+    required_keys:
+      - name
+      - operator
+      - rig
+      - spud_date
+    keys:
+      name: { type: string, example: "15/9-F-11 B" }
+      operator: { type: string, example: "Statoil" }
+      rig: { type: string, example: "MÆRSK INSPIRER" }
+      spud_date: { type: string, format: YYYY-MM-DD, example: "2013-05-28" }
+      hpht: { type: boolean, example: true }
+      tight_well: { type: boolean, example: true }
+      water_depth_m: { type: number, nullable: true }
+      rkb_msl_m: { type: number, nullable: true }
+
+  section:
+    required_keys:
+      - hole_size_in
+    keys:
+      hole_size_in: { type: number, example: 12.25 }
+      name: { type: string, nullable: true, example: "12 1/4 in section" }
+      planned_td_md: { type: number, nullable: true }
+
+  fluid_program:
+    required_keys:
+      - mud_system
+      - mud_density_sg
+    keys:
+      mud_system: { type: string, example: "Enviromul Yellow" }
+      mud_density_sg: { type: number, example: 1.28 }
+      ecd_sg: { type: number, nullable: true }
+      emw_sg: { type: number, nullable: true }
+
+  event:
+    required_keys:
+      - date
+      - operation
+      - depth_start_md
+      - depth_end_md
+      - summary
+    keys:
+      date: { type: string, format: YYYY-MM-DD }
+      operation: { type: enum, enum_ref: operation_type }
+      depth_start_md: { type: number, nullable: true }
+      depth_end_md: { type: number, nullable: true }
+
+      # optional time granularity (some DDRs only give a day window)
+      start_time: { type: string, nullable: true, example: "14:30" }
+      end_time: { type: string, nullable: true, example: "00:00" }
+
+      # human-readable, deterministic summary
+      summary: { type: string }
+
+      # drilling performance (optional)
+      avg_rop_mph: { type: number, nullable: true }
+      wob_mt: { type: string, nullable: true, example: "8-12" }
+      rpm: { type: string, nullable: true, example: "100-270" }
+
+      # directional / survey info (optional)
+      inclination_deg: { type: string, nullable: true, example: "~62" }
+      azimuth_deg: { type: string, nullable: true, example: "75-105" }
+      survey_recorded: { type: boolean, nullable: true }
+
+      # geology (optional)
+      formation: { type: enum, enum_ref: formation_name, nullable: true }
+      lithology_note: { type: string, nullable: true }
+
+      # risk / issues
+      issue: { type: enum, enum_ref: issue_type, nullable: true }
+      issue_note: { type: string, nullable: true }
+
+      # decisions & verification
+      decision: { type: string, nullable: true }
+      verification: { type: list, items: { type: enum, enum_ref: verification_type }, nullable: true }
+
+      # tools / equipment (optional)
+      bha_note: { type: string, nullable: true }
+      bit_note: { type: string, nullable: true }
+      casing_note: { type: string, nullable: true }
+
+      # references back to source documents
+      sources:
+        type: list
+        required: true
+        items:
+          type: object
+          required_keys: [file, page]
+          keys:
+            file: { type: string, example: "15_9_F_11_B_2013_05_31.pdf" }
+            page: { type: number, example: 1 }
+            quote_snippet: { type: string, nullable: true, note: "Keep short. Do not paste large excerpts." }
+
+top_level_document:
+  required_keys:
+    - well
+    - section
+    - fluid_program
+    - events
+  keys:
+    schema_version: { type: string, example: "0.1" }
+    well: { $ref: required_objects.well }
+    section: { $ref: required_objects.section }
+    fluid_program: { $ref: required_objects.fluid_program }
+    context_notes: { type: string, nullable: true }
+    events:
+      type: list
+      min_items: 1
+      items: { $ref: required_objects.event }
