@@ -10,32 +10,39 @@ It does not redistribute Volve data files. It only produces structured indexes (
 
 For each whitelisted Volve well, the generator writes:
 
-- wells/<well>/manifest.md  (human-readable)
+- wells/<well>/manifest.md (human-readable)
 - wells/<well>/manifest.json (machine-readable)
 
-Artifacts are grouped into lifecycle-relevant buckets such as:
+Manifests are bucketed into lifecycle-relevant categories such as:
 
-- DDR (XML, PDF, HTML)
-- Well construction and well technical reports
-- Logs (LAS, DLIS, LIS)
-- Survey and trajectory
-- Seismic and models (where applicable)
+- Well_Construction_Reports
+- DDR_XML, DDR_PDF, DDR_HTML
+- Logs (LAS, DLIS, LIS plus well log folders)
+- Survey_Trajectory
+- WellTechnical_General
 - Other
 
-The generator also applies:
+In addition, v1.3 applies:
 
 - De-duplication by normalized filename within each well and bucket using a deterministic path-preference rule
-- Foreign-well reference flagging for file rows (directories are ignored)
+- Cross-well reference flagging on file entries (directories are ignored)
 
-## Inputs
+## Generating the input catalog
 
-This project expects a prebuilt master catalog CSV generated elsewhere (for example, from a Databricks or Unity Catalog crawl).
-
-You provide the catalog locally (do not commit it). The default expected filename is:
+This repo expects a prebuilt master catalog CSV named:
 
 - out_wellkg_v3_catalog_v1.csv
 
-Minimum required columns:
+You generate this catalog outside this repository (for example, using Databricks to crawl the Volve mount and export a CSV).
+
+Reference pipeline:
+- Volve Metadata Discovery Index (Databricks catalog crawl + tagging): https://github.com/985185/volve-metadata-index
+
+The output of that crawl can be filtered/renamed into out_wellkg_v3_catalog_v1.csv as long as it contains the required columns listed below.
+
+## Inputs
+
+Minimum required columns in out_wellkg_v3_catalog_v1.csv:
 
 - path
 - name
@@ -43,45 +50,61 @@ Minimum required columns:
 - ext_norm
 - top_folder
 - tags
-- well_final  (the well identifier used by the scripts)
+- well_final (the well identifier used by the scripts)
 
-If your catalog uses a different well column name, update the scripts accordingly.
+Note: Some older documentation refers to a column named well. The current scripts use well_final.
 
 ## Quickstart
 
 ### Windows PowerShell
 
-1) Place your catalog CSV in the repository root:
-
-- out_wellkg_v3_catalog_v1.csv
-
+1) Place out_wellkg_v3_catalog_v1.csv in the repository root.
 2) Run:
 
 ```powershell
 .\scripts\run_all.ps1
 ```
 
+### Linux / macOS (bash)
+
+1) Place out_wellkg_v3_catalog_v1.csv in the repository root.
+2) Run:
+
+```bash
+bash scripts/run_all.sh
+```
+
+If you want to make it executable:
+
+```bash
+chmod +x scripts/run_all.sh
+./scripts/run_all.sh
+```
+
 Outputs are written to:
 
-- .\wells\
-
-### Python (manual)
-
-If you prefer to run the steps manually:
-
-- Generate or update the whitelist (optional)
-- Generate manifests per well
-
-See the scripts in the scripts/ folder for the exact entry points.
-
-## Repository layout
-
-- scripts/
-  Build whitelist and generate manifests.
 - wells/
-  Output manifests (tracked if you choose; large outputs are usually better in Releases).
-- well_whitelist.csv
-  Default whitelist artifact.
+
+## Repository structure
+
+| Path | What it is |
+| --- | --- |
+| scripts/ | Pipeline scripts (build whitelist, generate manifests, entry points). |
+| wells/ | Output manifests (per-well). Usually better to ship large outputs via GitHub Releases. |
+| well_whitelist.csv | Default whitelist artifact used by the generator. |
+| out_wellkg_v3_catalog_v1.csv | Input catalog (local only; do not commit). |
+
+## De-duplication and cross-well flagging
+
+De-duplication:
+Within each well and bucket, items are de-duplicated by normalized filename. When duplicates exist, the generator keeps a single “best” path using a deterministic preference score (for example, preferring Well_logs_pr_WELL over Well_logs).
+
+Cross-well flagging:
+For file rows only, the generator scans the filename and path text for other well IDs (strict pattern match). If any are found, they are not excluded. They are included and annotated:
+- manifest.json: foreign_ref_wells: ["15/9-F-..."]
+- manifest.md: appended as (foreign-ref: ...)
+
+Directories are not cross-well flagged.
 
 ## Intended use
 
@@ -92,6 +115,10 @@ These manifests are designed to:
 - Serve as a foundation for later graph work (RDF, Neo4j, NetworkX)
 
 This repository focuses on deterministic indexing, not ML or LLM retrieval.
+
+## Requirements
+
+See requirements.txt.
 
 ## License
 
