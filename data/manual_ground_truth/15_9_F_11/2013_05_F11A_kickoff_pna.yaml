@@ -1,0 +1,100 @@
+schema_version: "0.1"
+
+well:
+  name: "15/9-F-11 A"
+  operator: "Statoil"
+  rig: "MÆRSK INSPIRER"
+  spud_date: "2013-03-07"
+  hpht: true
+  tight_well: true
+  water_depth_m: 91
+  rkb_msl_m: 54.9
+
+section:
+  hole_size_in: 12.25
+  name: "Kick-off / plug operations (pre-B wellbore)"
+
+fluid_program:
+  mud_system: "Enviromul Yellow"
+  mud_density_sg: 1.28
+  ecd_sg: null
+  emw_sg: null
+
+context_notes: >
+  This YAML captures cement plug (P&A / kick-off plug) and verification activities prior to the F-11B drilling phase.
+
+events:
+  - date: "2013-05-25"
+    operation: cement
+    depth_start_md: 3754
+    depth_end_md: 3280
+    start_time: "00:00"
+    end_time: "00:00"
+    summary: "Mixed and pumped P&A cement plug; WOC; BOP test during WOC; circulated and reduced MW to 1.28 sg."
+    avg_rop_mph: null
+    inclination_deg: null
+    azimuth_deg: null
+    formation: unknown
+    issue: none
+    issue_note: null
+    decision: "Proceed with kick-off plug sequence and BHA transition."
+    verification:
+      - well_static_flowcheck
+      - bop_test
+    sources:
+      - file: "15_9_F_11_A_2013_05_26.pdf"
+        page: 1
+        quote_snippet: "Mixed and pumped P&A plug... Performed BOP test... reduced MW to 1,28 sg."
+      - file: "15_9_F_11_A_2013_05_26.pdf"
+        page: 1
+        quote_snippet: "Flow checked well... well static."
+
+  - date: "2013-05-26"
+    operation: cement
+    depth_start_md: 3280
+    depth_end_md: 0
+    start_time: "00:00"
+    end_time: "00:00"
+    summary: "Reduced MW to 1.28 sg; spotted 10 m3 hi-vis pill; pumped kick-off plug; POOH cement stinger; commenced make-up of 12¼\" drilling BHA."
+    avg_rop_mph: null
+    inclination_deg: null
+    azimuth_deg: null
+    formation: unknown
+    issue: none
+    issue_note: "No backflow observed; flow checks static."
+    decision: "Trip out cement stinger and prepare 12¼\" drilling BHA."
+    verification:
+      - well_static_flowcheck
+      - toc_tagged
+      - cement_displacement_confirmed
+    sources:
+      - file: "15_9_F_11_A_2013_05_27.pdf"
+        page: 1
+        quote_snippet: "Tagged cement... Spotted Hi-Vis pill... Mixed and pumped kick off plug."
+      - file: "15_9_F_11_A_2013_05_27.pdf"
+        page: 1
+        quote_snippet: "Checked for back flow, no back flow observed. Flow checked well, static."
+
+  - date: "2013-05-27"
+    operation: trip_in
+    depth_start_md: 0
+    depth_end_md: 2494
+    start_time: "00:00"
+    end_time: "00:00"
+    summary: "Picked up 12¼\" drilling BHA and RIH to 2494 m; interruptions due to TDS hydraulic leaks; choke drill performed."
+    avg_rop_mph: null
+    inclination_deg: null
+    azimuth_deg: null
+    formation: unknown
+    issue: hydraulic_leak
+    issue_note: "Repeated hydraulic leak on Top Drive System (TDS) oil cooler / alignment cylinder; troubleshooting and repairs."
+    decision: "Repair TDS and continue RIH; perform choke drill before proceeding."
+    verification:
+      - choke_drill
+    sources:
+      - file: "15_9_F_11_A_2013_05_28.pdf"
+        page: 1
+        quote_snippet: "Observed hydraulic leak on TDS... Replaced faulty alignment cylinder... Discovered leak on TDS oil cooler..."
+      - file: "15_9_F_11_A_2013_05_28.pdf"
+        page: 1
+        quote_snippet: "Performed choke drill."
