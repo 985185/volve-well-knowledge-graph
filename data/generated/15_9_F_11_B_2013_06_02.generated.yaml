@@ -1,0 +1,41 @@
+schema_version: '0.1'
+well:
+  name: 15/9-F-11 B
+  operator: Statoil
+  rig: unknown
+  spud_date: '2013-05-28'
+  hpht: true
+  tight_well: true
+  water_depth_m: 91
+  rkb_msl_m: 54.9
+section:
+  hole_size_in: 12.25
+  name: Auto-generated from DDR XML
+  planned_td_md: null
+fluid_program:
+  mud_system: null
+  mud_density_sg: null
+  ecd_sg: null
+  emw_sg: null
+context_notes: Auto-generated from DDR XML (date-shifted by -1 day to match ops window).
+events:
+- date: '2013-06-01'
+  operation: retrieve_wear_bushing
+  depth_start_md: null
+  depth_end_md: 827.0
+  start_time: null
+  end_time: null
+  summary: Retrieved wearbushing washed BOPs and wellhead. R/U and RIH 9 5/9" casing
+    to 827 m..
+  avg_rop_mph: null
+  inclination_deg: null
+  azimuth_deg: null
+  formation: unknown
+  issue: none
+  issue_note: null
+  decision: null
+  verification: null
+  sources:
+  - file: 15_9_F_11_B_2013_06_02.xml
+    page: 1
+    quote_snippet: null
