@@ -1,0 +1,65 @@
+well:
+  name: 15/9-F-11
+  rig: MÆRSK INSPIRER
+  operator: Statoil
+  period: 2013-05-25 to 2013-06-01
+  section: 12.25in
+
+kickoff_phase:
+  cement_plug:
+    toc_tagged_md: 3389
+    cement_density_sg: 2.00
+    mud_weight_sg: 1.28
+    well_static: true
+
+drilling_section:
+  hole_size_in: 12.25
+  mud_system: Enviromul Yellow
+  mud_density_sg: 1.28
+
+  events:
+    - date: 2013-05-28
+      depth_start_md: 2627
+      depth_end_md: 2787
+      operation: drilling
+      avg_rop_mph: 19
+      inclination_deg: 38-41
+      issues: none
+
+    - date: 2013-05-29
+      depth_start_md: 2787
+      depth_end_md: 2917
+      operation: drilling_orienting
+      avg_rop_mph: 5-11
+      inclination_deg: ~62
+      lithology: Tor Formation
+      well_static: true
+      decision: trip_for_bit_change
+
+    - date: 2013-05-30
+      depth_start_md: 2917
+      depth_end_md: 3103
+      operation: ream_and_build
+      avg_rop_mph: 22
+      ecd_sg: 1.30
+      inclination_deg: ~62
+      azimuth_turn: toward_90
+
+    - date: 2013-05-31
+      depth_start_md: 3103
+      depth_end_md: 3197
+      operation: drill_to_td
+      td_called: true
+      td_time: 05:10
+      gyro_run: true
+      formation: Hod Formation
+
+post_td:
+  hole_conditioning:
+    circulated: true
+    bottoms_up: 3.5
+
+  casing_preparation:
+    wear_bushing_retrieved: true
+    casing_size: 9.625in
+    casing_run_to_md: 827
