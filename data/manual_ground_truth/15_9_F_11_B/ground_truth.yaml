@@ -1,0 +1,62 @@
+VALIDATION REPORT
+======================================================================
+Ground truth events: 6
+Generated files: 6
+
+DATE 2013-05-28
+----------------------------------------------------------------------
+Operation: OK
+Depth end: OK
+Verification: OK
+
+DATE 2013-05-29
+----------------------------------------------------------------------
+Operation: OK
+Depth end: OK
+Verification: DIFF
+  generated : []
+  truth     : ['well_static_flowcheck']
+
+DATE 2013-05-30
+----------------------------------------------------------------------
+Operation: OK
+Depth end: MISMATCH
+  generated : 2870.0
+  truth     : 3103
+Verification: DIFF
+  generated : []
+  truth     : ['well_static_flowcheck']
+
+DATE 2013-05-31
+----------------------------------------------------------------------
+Operation: OK
+Depth end: OK
+Verification: DIFF
+  generated : ['gyro_confirmation', 'td_survey']
+  truth     : ['gyro_confirmation', 'td_survey', 'well_static_flowcheck']
+
+DATE 2013-06-01
+----------------------------------------------------------------------
+Operation: OK
+Depth end: OK
+Verification: DIFF
+  generated : []
+  truth     : ['casing_float_verified']
+
+DATE 2013-06-02
+----------------------------------------------------------------------
+Operation: OK
+Depth end: MISMATCH
+  generated : 3197.0
+  truth     : 3179
+Verification: DIFF
+  generated : []
+  truth     : ['none']
+
+======================================================================
+SUMMARY
+======================================================================
+Compared days: 6
+Operation accuracy: 6/6
+Depth end accuracy: 4/6
+Verification recall: 2/7
